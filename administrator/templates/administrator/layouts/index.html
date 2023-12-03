@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>C.A.R.E.S - {% block title%}{% endblock title%}</title>
+    <link rel="stylesheet" href="{% static 'administrator/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{% static 'administrator/css/Font%20Awesome%205%20Brands.css' %}">
+    <link rel="stylesheet" href="{% static 'administrator/css/Font%20Awesome%205%20Free.css' %}">
+    <link rel="stylesheet" href="{% static 'administrator/fonts/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'administrator/css/vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'administrator/css/vendor/datatables/dataTables.bootstrap4.min.css' %}">
+</head>
+
+<body id="page-top">
+    <div id="wrapper"><ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'administrator:dashboard' %}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="{% static 'img/brands/logo.png' %}" alt="RUNASA Logo" style="max-width:80px; margin-right:-30px">
+                </div>
+                <div class="sidebar-brand-text mx-3">C.A.R.E.S <sup>v1</sup></div>
+            </a>
+
+            
+            <hr class="sidebar-divider my-0">
+
+            
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'administrator:dashboard' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            
+            <hr class="sidebar-divider">
+
+            
+            <div class="sidebar-heading">
+                Departmental Fees
+            </div>
+            
+            {% comment %} <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-check-circle"></i>
+                    <span>Payments</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Verification </h6>
+                        <a class="collapse-item" href="">New</a>
+                        <a class="collapse-item disabled" href="">Edit</a>
+                    </div>
+                </div>
+            </li> {% endcomment %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'administrator:students' %}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Students</span></a>
+            </li>
+
+            
+            <hr class="sidebar-divider d-none d-md-block">
+
+            
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="bg-white shadow navbar navbar-expand navbar-light topbar mb-4 static-top"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop"><i class="fas fa-bars"></i></button>
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" 
+                    action="{% url 'administrator:search' %}" method="GET">
+                        <div class="input-group">
+                            <input class="bg-light border-0 form-control form-control small" 
+                            type="text" name="q" aria-describedby="basic-addon2" aria-label="Search" placeholder="Search Matric Number">
+                            <div class="input-group-text input-group-append">
+                                <button class="btn btn-primary" type="submit" style="background: #8D5240;">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search" action="{% url 'administrator:search' %}" method="GET" >
+                                    <div class="input-group">
+                                        <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                        aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                
+                                <span class="badge badge-danger badge-counter">0</span>
+                            </a> 
+                        </li>
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.user.first_name}} {{ request.user.last_name}}</span>
+                                <img class="img-profile rounded-circle" src="{% static 'administrator/img/undraw_profile.svg' %}">
+                            </a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+                <div class="container-fluid">
+                    {% block header %}{% endblock header %}
+                   
+                    {% block row1 %}{% endblock row1 %}
+                    
+                    {% block row2 %}{% endblock row2 %}
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © RUNASA 2023-2024</span></div>
+                </div>
+            </footer>
+        </div>
+    </div><a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    <div class="modal fade" role="dialog" tabindex="-1" id="logoutModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body"><span>Select "Logout" below if you are ready to end your current session.</span></div>
+                <div class="modal-footer"><button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button><a class="btn btn-primary" role="button" href="{% url 'administrator:logout' %}">Logout</a></div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'administrator/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'administrator/js/js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'administrator/js/js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'administrator/js/js/demo/chart-pie-demo.js' %}"></script>
+    <script src="{% static 'administrator/js/js/demo/chart-bar-demo.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'administrator/js/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'administrator/js/js/demo/datatables-demo.js' %}"></script>
+</body>
+
+</html>

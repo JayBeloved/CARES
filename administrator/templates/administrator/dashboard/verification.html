@@ -1,0 +1,111 @@
+{% extends 'administrator/layouts/index.html' %}
+{% load static %}
+
+{% load static %}
+{% block title%}Students{% endblock title%}
+{% block header %}
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Students</h1><a class="btn btn-primary btn-sm shadow-sm d-none d-sm-inline-block disabled" role="button" href="#" style="background: #8D5240;"><i class="fas fa-download text-white-50 fa-sm"></i> Generate Report</a>
+    </div>
+    <p class="mb-4">Use this form to verify that the students payment have been received in the account and the student can generate an e-receipt. An automatic receipt number will be attached to the student once you submit the form.</p>
+</div>
+{% endblock header %}
+
+{% block row1 %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                 <div class="d-sm-flex align-items-center justify-content-between mb-0">
+                    <h6 class="m-0 font-weight-bold text-primary">Student Information</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="p-5">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="h6 mb-0 font-weight-bold text-gray-600">
+                                Full Name: {{ student.FullName.upper }}
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="h6 mb-0 font-weight-bold text-gray-600">
+                                Matric Number: {{ student.MatricNo }}
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="h6 mb-0 font-weight-bold text-gray-600">
+                                Level: {{ student.Level }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock row1 %}
+
+{% block row2 %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 class="text-center {{ messages.tags }} animate__animated
+                    animate__fadeIn animate__delay-3s">{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Verify Student Payment</h6>
+            </div>
+            <div class="card-body">
+                <div class="p-5">
+                    <form action="{% url 'administrator:verify' student.id %}" class="user" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label text-primary">Payment Status</label>
+                                    {{ form.Paid }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label text-primary">Amount Paid</label>
+                                    {{ form.Amount}}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label text-primary">Payment Date</label>
+                                    {{ form.Date }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+                        </div>
+                        <hr>
+
+                        <button class="btn btn-primary btn-user btn-block" type="submit">Complete Verification</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock row2 %}
+</div>
+        

@@ -1,0 +1,19 @@
+.underlined {
+  position: relative;
+}
+
+.underlined::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: #8D5240;
+  z-index: -1;
+}
+
+.row {
+}
+

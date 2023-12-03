@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block top %} 
+<ul class="navbar-nav mx-auto">
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:home' %}">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:contribute' %}">Contribute</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:access' %}">Access</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:verify' %}">Verify</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:about' %}">About</a></li>
+</ul><a class="btn btn-primary shadow" role="button" href="{% url 'main:verify' %}" style="background: #03123E;border-radius: 20px;box-shadow: 0px 0px #4A524D;">E-Receipt</a>
+{% endblock top %}
+
+{% block header %}
+<section class="py-4 py-md-5 my-5">
+    <div class="container py-md-5">
+        <div class="row">
+            <div class="col-md-6 text-center"><img class="img-fluid w-100" src="{% static 'img/illustrations/startup.svg' %}"></div>
+            <div class="col-md-5 col-xl-4 text-center text-md-start">
+                <h2 class="display-6 fw-bold mb-5"><span class="underlined pb-1"><strong>Login</strong><br></span></h2>
+                <form method="post" data-bs-theme="light" >
+                    {% csrf_token %}
+                    {% if msg %}
+                        <p>{{ msg | safe }}</p>
+                    {% else %}
+                    {% endif %}
+                    <div class="mb-3 form-group">{{ form.username }}</div>
+                    <div class="mb-3 form-group">{{ form.password }}</div>
+                    <div class="mb-5"><button class="btn btn-primary shadow" type="submit">Log in</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock header %}

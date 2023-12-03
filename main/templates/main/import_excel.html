@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Import{% endblock title %}
+
+{% block top %} 
+<ul class="navbar-nav mx-auto">
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:home' %}">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:contribute' %}">Contribute</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:access' %}">Access</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{% url 'main:verify' %}">Verify</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:about' %}">About</a></li>
+</ul><a class="btn btn-primary shadow" role="button" href="{% url 'main:verify' %}" style="background: #03123E;border-radius: 20px;box-shadow: 0px 0px #4A524D;">E-Receipt</a>
+{% endblock top %}
+
+{% block header  %}
+    <section class="py-5 mt-5" style="padding-bottom: 10px !important;padding-top: 20px !important;padding-right: 0px;">
+        <div class="container py-4 py-xl-5" style="height: 280px;">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2 class="display-6 fw-bold mb-4">Import Student&nbsp;<span class="underlined">Data</span></h2>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock header  %}
+
+{% block section1 %}
+    <section class="py-4 py-xl-5" style="padding-top: 5px !important;padding-bottom: 10px !important;">
+        <div class="container">
+            <section class="position-relative py-4 py-xl-5" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                <div class="container position-relative">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" style="width: 900px;">
+                            <div class="card mb-5" style="width: 900px;height: 249.6px;margin: 0px;">
+                                <div class="card-body p-sm-5">
+                                    <h2 class="text-center mb-4">Data Import</h2>
+                                    <form method="post" enctype="multipart/form-data" url="{% url 'main:import' %}">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <input class="form-control" type="file" name="csv_file" accept=".csv">
+                                        </div>
+                                        
+                                        <div><button class="btn btn-primary d-block w-100" type="submit">Upload and Import</button></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock section1 %}

@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}About{% endblock title %}
+
+{% block top %} 
+<ul class="navbar-nav mx-auto">
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:home' %}">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:contribute' %}">Contribute</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:access' %}">Access</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'main:verify' %}">Verify</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{% url 'main:about' %}">About</a></li>
+</ul><a class="btn btn-primary shadow" role="button" href="{% url 'main:verify' %}" style="background: #03123E;border-radius: 20px;box-shadow: 0px 0px #4A524D;">E-Receipt</a>
+{% endblock top %}
+
+{% block header  %}
+    <section class="py-2 mt-2">
+        <div class="container py-4 py-xl-3">
+            <div class="row gy-4 gy-md-0">
+                <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="max-width: 350px;">
+                        <h1 class="display-5 fw-bold mb-4">About&nbsp;<span class="underlined">C.A.R.E.S</span></h1>
+                        <p class="text-muted my-4">This is an initiative of the Redeemers University Accounting Student 
+                            Association (RUNASA) 2023/2024 Executives.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div><img class="rounded img-fluid w-100 fit-cover" style="min-height: 150px;" src="{% static 'img/illustrations/startup.svg' %}"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock header  %}
+
+{% block section1 %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <h4 class="fw-bold">What is C.A.R.E.S ?</h4>
+            </div>
+            <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5"> 
+                <p>The Collaborative Academic Resource Exchange System (CARES), is an of the 
+                    Redeemer's University Accounting Student Association (RUNASA) 
+                    executives and the Academic Committee of the department!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <h4 class="fw-bold">Why C.A.R.E.S ?</h4>
+            </div>
+            <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5"> 
+                <p>This initiative aims to create a centralized repository of essential course materials 
+                    and past questions, ensuring that all students have easy access to the resources they 
+                    need to excel academically. By contributing your materials, you're not only helping 
+                    fellow students but also fostering a collaborative learning environment within the 
+                    department.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <h4 class="fw-bold">E-Receipt</h4>
+            </div>
+            <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5"> 
+                <p>E-Receipt is our digital solution to simplify payment tracking and record-keeping 
+                    for students in the department. Our system enables quick and secure access to 
+                    electronic receipts for verified transactions, providing a convenient and 
+                    eco-friendly way to manage payments.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock section1 %}
