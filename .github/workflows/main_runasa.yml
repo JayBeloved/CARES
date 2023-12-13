@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'runasa'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8CAFF31F06654289944B4357CE1A265B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2101426321D3421085AFEFEECDE15E73 }}
