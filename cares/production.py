@@ -1,4 +1,4 @@
-from .settings import *
+from .local import *
 import os
 
 # Configure the domain name using the environment variable
