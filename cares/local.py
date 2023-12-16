@@ -80,11 +80,10 @@ WSGI_APPLICATION = 'cares.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DBNAME'],
-        'HOST': os.environ['DBHOST'],
-        'USER': os.environ['DBUSER'],
-        'PASSWORD': os.environ['DBPASS'],
-        'OPTIONS': {'sslmode': 'prefer'} 
+        'NAME': 'runasa',
+        'HOST': 'localhost',
+        'USER': 'runasa',
+        'PASSWORD': 'Emerge2022_' 
     }
 }
 
