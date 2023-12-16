@@ -49,21 +49,21 @@ def receipt(request, student_id):
         messages.error(request, 'Something Went Wrong')
         return HttpResponseRedirect(reverse("main:verify"))
 
-# def import_excel(request):
-#     if request.method == "POST" and request.FILES["csv_file"]:
-#         data = request.FILES["csv_file"]
+def import_excel(request):
+    if request.method == "POST" and request.FILES["csv_file"]:
+        data = request.FILES["csv_file"]
 
-#         if data.name.endswith(".csv"):
-#             # Read the Excel file using pandas
-#             df = pd.read_csv(data)
+        if data.name.endswith(".csv"):
+            # Read the Excel file using pandas
+            df = pd.read_csv(data)
 
-#             # Loop through the DataFrame and create Student objects
-#             for index, row in df.iterrows():
-#                 student = Student(
-#                     FullName=row["FullName"],
-#                     MatricNo=row["MatricNo"],
-#                     Level=row["Level"]
-#                 )
-#                 student.save()
+            # Loop through the DataFrame and create Student objects
+            for index, row in df.iterrows():
+                student = Student(
+                    FullName=row["FullName"],
+                    MatricNo=row["MatricNo"],
+                    Level=row["Level"]
+                )
+                student.save()
 
-#     return render(request, "main/import_excel.html")
+    return render(request, "main/import_excel.html")
