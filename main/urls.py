@@ -9,6 +9,6 @@ urlpatterns = [
         path('about', views.about, name="about"),
         path('verify', views.verify, name="verify"),
         path('receipt/<int:student_id>', views.receipt, name="receipt"),
-        path('import', views.import_excel, name="import"),
+        # path('import', views.import_excel, name="import"),
     ], 'ereceipt'), namespace='main')),
 ]

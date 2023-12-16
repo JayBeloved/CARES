@@ -55,6 +55,7 @@ def login_redirect(request):
 @login_required
 def dashboard(request):
     # Check if there are students in the database
+    all_students = 0
     check = len(Student.objects.all())
     if check > 0:
         # Get all rentals
