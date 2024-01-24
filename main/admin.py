@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
-from .models import Student
+from .models import Student, Resource, Course
 
 User = get_user_model()
 
@@ -38,3 +38,5 @@ admin.site.index_title = "Welcome to the RUNASA C.A.R.E.S Super Admin Area"
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Student)
+admin.site.register(Course)
+admin.site.register(Resource)

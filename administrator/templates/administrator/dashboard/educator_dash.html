@@ -28,7 +28,7 @@
                                             <div class="text-uppercase text-primary text-xs font-weight-bold mb-1"><span>Resources Uploaded</span></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ all_resources }}&nbsp;</span></div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-user-graduate fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -39,9 +39,9 @@
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
                                             <div class="text-uppercase text-success text-xs font-weight-bold mb-1"><span>Total Course Materials</span></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>&nbsp;N {{ course_materials }}</span></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>&nbsp;{{ course_materials }}</span></div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-money-bill fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -54,16 +54,11 @@
                                             <div class="text-uppercase text-info text-xs font-weight-bold mb-1"><span>Total Past Questions</span></div>
                                             <div class="row align-items-center no-gutters">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><span>{{ past_questions }}%</span></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="bg-info progress-bar" role="progressbar" style="width:{{perc_paid}}%;" aria-valuenow="{{perc_paid}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><span>{{ past_questions }}</span></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-money-bill-wave fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +71,7 @@
                                             <div class="text-uppercase text-warning text-xs font-weight-bold mb-1"><span> ICAN Materials</span></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ ican }}</span></div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-user-friends fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +84,7 @@
                         <div class="col-lg-6 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Payment Progress&nbsp;</h6>
+                                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Add New Resource&nbsp;</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">100 Level<span class="float-right">{{perc_100}}%</span></h4>
@@ -114,7 +109,7 @@
                         <div class="col-lg-6 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Features</h6>
+                                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Add New Cours</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center"><img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width:25rem;" src="{% static 'administrator/img/undraw_posting_photo.svg' %}" alt="..."></div>

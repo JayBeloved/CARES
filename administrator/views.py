@@ -34,6 +34,8 @@ def login_view(request):
                 if user.user_type == 1:
                     return redirect("administrator:dashboard")
                     # return HttpResponse("ADMIN DASHBOARD")
+                elif user.user_type == 3:
+                    return redirect("administrator:edu_dashboard")
                 elif user.user_type == 2:
                     messages.success(request, 'STUDENT SUCCESSFUL LOGIN')
                     # return redirect("agents:dashboard")
@@ -54,8 +56,9 @@ def login_redirect(request):
 
 @login_required
 def edu_dashboard(request):
+    
     # Check if there are resources in the database
-    all_resources = 0
+    all_resources, course_materials, past_questions, ican, solution = (0,0,0,0,0)
     check = len(Resource.objects.all())
     if check > 0:
         # Get all resources

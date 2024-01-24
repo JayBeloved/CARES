@@ -84,7 +84,7 @@ class ResourceUploadForm(forms.ModelForm):
             }
         ))
     
-    description = forms.Textarea(
+    description = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Short Description of the resource",
@@ -112,7 +112,7 @@ class ResourceUploadForm(forms.ModelForm):
 
     class Meta:
         model = Resource
-        fields = ['course', 'category', 'mat_name', 'description', 'resource_code', 'link', 'date_added']
+        fields = ['course', 'category', 'mat_name', 'description', 'link', 'date_added']
 
 # class ProfileInfoUpdateForm(forms.ModelForm):
 #     username = forms.CharField(
