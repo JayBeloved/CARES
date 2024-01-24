@@ -1,32 +1,69 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Access{% endblock title %}
+{% block title %}Resources{% endblock title %}
 
 {% block top %} 
 <ul class="navbar-nav mx-auto">
     <li class="nav-item"><a class="nav-link" href="{% url 'main:home' %}">Home</a></li>
     <li class="nav-item"><a class="nav-link" href="{% url 'main:contribute' %}">Contribute</a></li>
-    <li class="nav-item"><a class="nav-link active" href="{% url 'main:access' %}">Access</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{% url 'main:access' %}">Resources</a></li>
     <li class="nav-item"><a class="nav-link" href="{% url 'main:verify' %}">Verify</a></li>
     <li class="nav-item"><a class="nav-link" href="{% url 'main:about' %}">About</a></li>
 </ul><a class="btn btn-primary shadow" role="button" href="{% url 'main:verify' %}" style="background: #03123E;border-radius: 20px;box-shadow: 0px 0px #4A524D;">E-Receipt</a>
 {% endblock top %}
 
 {% block header  %}
-    <section class="py-5 mt-5">
+    <section class="py-2 mt-5">
         <div class="container py-4 py-xl-5">
             <div class="row gy-4 gy-md-0">
-                <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                <div class="col-xl-12 text-center text-md-start d-flex d-sm-flex ">
                     <div style="max-width: 350px;">
-                        <h1 class="display-5 fw-bold mb-4">Under&nbsp;<span class="underlined">Development</span></h1>
-                        <p class="text-muted my-4">The repository is currently in development. Once completed you can access a plethora of course materials and past questions, as well other documents to help you excel academically.</p>
+                        <h3 class="display-6 fw-bold mb-2">Resources&nbsp;<span class="underlined">Hub</span></h3>
+                        <p class="text-muted">Search the classroom resources you need here using the filter and search bar.</p>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div><img class="rounded img-fluid w-100 fit-cover" style="min-height: 300px;" src="{% static 'img/illustrations/startup.svg' %}"></div>
-                </div>
             </div>
+        <div class="card shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+            <!-- Your HTML code within Django template -->
+            <form method="GET" action="">
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="search_type" id="past_questions" value="past_questions">
+                        <label class="form-check-label" for="past_questions">Past Questions</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="search_type" id="course_materials" value="course_materials">
+                        <label class="form-check-label" for="course_materials">Course Materials</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="search_type" id="all" value="all" checked>
+                        <label class="form-check-label" for="all">All</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <span class="form-bar"></span>
+                        <label class="float-label text-primary">Search</label>
+                        <input type="text" class="shadow form-control form-control-user" 
+                        id="search" name="search">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="select_course">Select Course:</label>
+                        <input type="text" class="form-control" id="select_course" name="select_course">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="choose_level">Choose Level:</label>
+                        <input type="text" class="form-control" id="choose_level" name="choose_level">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div>
         </div>
     </section>
 {% endblock header  %}

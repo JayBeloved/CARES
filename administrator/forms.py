@@ -1,7 +1,7 @@
 from django import forms
 # from django.contrib.auth.forms import UserCreationForm
 # from django.forms import widgets
-from main.models import User, Student, PAYMENT_STATUS
+from main.models import User, Student, PAYMENT_STATUS, Course, Resource
 
 
 class LoginForm(forms.Form):
@@ -54,6 +54,65 @@ class StudentVerificationForm(forms.ModelForm):
         model = Student
         fields = ('Paid', 'Amount', 'Date')
 
+
+class ResourceUploadForm(forms.ModelForm):
+    course = forms.ModelChoiceField(
+        queryset=Course.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control form-control-select',
+                'style': "border-radius: 10rem;padding: 0.5rem 0.5rem;",
+                'placeholder': " Course",
+            }
+        ))
+    
+    category = forms.ChoiceField(
+        choices=Resource.CATEGORY_CHOICES,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control form-control-select',
+                'style': "border-radius: 10rem;padding: 0.5rem 0.5rem;",
+                'placeholder': " Material Category",
+            }
+        ))
+    
+    mat_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Name of Resource",
+                "class": "shadow form-control form-control-user"
+            }
+        ))
+    
+    description = forms.Textarea(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Short Description of the resource",
+                "class": "shadow form-control form-control-user"
+            }
+        ))
+
+    link = forms.FloatField(
+        widget=forms.NumberInput(
+            attrs={
+                "class": "form-control form-control-user",
+                'placeholder': " Amount Paid",
+            }
+        ))
+    
+    date_added = forms.DateField(
+        widget=forms.NumberInput(
+            attrs={
+                'type': 'date',
+                'class': 'form-control form-control-select',
+                'placeholder': " Date Added",
+                'style': "border-radius: 10rem;padding: 0.5rem 0.5rem;",
+            }
+        ))
+
+    class Meta:
+        model = Resource
+        fields = ['course', 'category', 'mat_name', 'description', 'resource_code', 'link', 'date_added']
 
 # class ProfileInfoUpdateForm(forms.ModelForm):
 #     username = forms.CharField(

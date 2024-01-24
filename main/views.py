@@ -14,7 +14,7 @@ def contribute(request):
     return render(request, 'main/contribute.html')
 
 def access(request):
-    return render(request, 'main/access.html')
+    return render(request, 'main/resources.html')
 
 def about(request):
     return render(request, 'main/about.html')

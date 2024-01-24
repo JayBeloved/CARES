@@ -14,7 +14,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from .forms import *
-from main.models import Student
+from main.models import Student, Course, Resource
 
 
 # Create your views here.
@@ -51,6 +51,52 @@ def login_view(request):
 
 def login_redirect(request):
     return HttpResponseRedirect('login')
+
+@login_required
+def edu_dashboard(request):
+    # Check if there are resources in the database
+    all_resources = 0
+    check = len(Resource.objects.all())
+    if check > 0:
+        # Get all resources
+        allresources = Resource.objects.all()
+        # Create DataFrame of all resources
+        df = pd.DataFrame.from_records(allresources.values())
+
+        # Convert date to numeric
+        df[['Date']] = df[['Date']].apply(pd.to_datetime)
+
+
+        # Get values 
+        all_resources,_ = df.shape
+        
+        df_materials = df[df['category']=='material'] # Data of course materials
+        df_pq = df[df['category']=='pq'] # Data of past questions
+        df_ican = df[df['category']=='ican'] # Data of ican materials
+        df_solutions= df[df['category']=='solution'] # Data of suggested solutions
+        
+        # Get Counts
+        course_materials, _ = df_materials.shape # Number course materials
+        past_questions, _ = df_pq.shape # Number of past questions
+        ican, _ = df_ican.shape # Number of ican materials
+        solution, _ = df_solutions.shape
+
+        """
+        Values for Level Materials
+        
+        """
+
+
+    context = {
+        'all_resources':all_resources,
+        'course_materials':course_materials,
+        'past_questions':past_questions,
+        'ican': ican,
+        'solution': solution
+    }
+
+    return render(request, 'administrator/dashboard/educator_dash.html', context) 
+
 
 @login_required
 def dashboard(request):
@@ -140,6 +186,7 @@ def dashboard(request):
 
     return render(request, 'administrator/dashboard/dashboard.html', context) 
 
+
 class StudentsListView(ListView):
     model = Student
     template_name = "administrator/dashboard/students.html"
@@ -150,6 +197,26 @@ class StudentsListView(ListView):
         if self.request.user.user_type == 1:
             # Get all students
             queryset = Student.objects.all()
+        return queryset
+
+    # extra_context = {
+    #     'alertCount': alert()[1],
+    #     'alerts': alert()[0],
+    # }
+    ordering = ['-id']
+    paginate_by = 10
+
+
+class ResourcesListView(ListView):
+    model = Resource
+    template_name = "administrator/dashboard/resources.html"
+    context_object_name = "resources"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.user_type == 1:
+            # Get all resources
+            queryset = Resource.objects.all()
         return queryset
 
     # extra_context = {

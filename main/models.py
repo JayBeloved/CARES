@@ -8,9 +8,11 @@ from django.contrib.auth.models import AbstractUser
 # Create variables to store user types
 SUPER_ADMIN = 1
 STUDENT = 2
+ACADEMIC = 3
 
 USERTYPE_CHOICES = (
     (SUPER_ADMIN, 'Administrator'),
+    (ACADEMIC, 'Academic Officer'),
     (STUDENT, 'Student'), 
 )
 
@@ -30,7 +32,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'user_type']
 
 
-# Model for landlords
+# Model for Students
 class Student(models.Model):
     FullName = models.CharField(max_length=100, null=True)
     MatricNo = models.CharField(max_length=30, null=True, blank=True)
@@ -42,4 +44,32 @@ class Student(models.Model):
 
     def __str__(self):
         return self.FullName
-    
+
+# Model for Courses    
+class Course(models.Model):
+    course_title = models.CharField(max_length=255)
+    course_code = models.CharField(max_length=20)
+    level = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.code} ({self.title})"
+
+# Model for resources
+class Resource(models.Model):
+    CATEGORY_CHOICES = [
+        ('material', 'Course Material'),
+        ('pq', 'Past Question'),
+        ('solution', 'Suggested Solution'),
+        ('ican', 'ICAN')
+    ]
+
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    mat_name = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    resource_code = models.CharField(max_length=30, unique=True, null=True, blank=True)
+    date_added = models.DateField('Upload Date', default=timezone.now, null=True, blank=True)
+    link = models.URLField()
+
+    def __str__(self):
+        return f"{self.category} - {self.name} ({self.course.course_code})"
