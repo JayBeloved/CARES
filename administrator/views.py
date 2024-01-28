@@ -60,6 +60,7 @@ def edu_dashboard(request):
     # Check if there are resources in the database
     all_resources, course_materials, past_questions, ican, solution = (0,0,0,0,0)
     courses = []
+    categories = []
     recent_mat = []
     recent_pq = []
     check = len(Resource.objects.all())
