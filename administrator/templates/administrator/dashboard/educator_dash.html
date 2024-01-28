@@ -13,112 +13,169 @@
             animate__fadeIn animate__delay-3s">{{ message }}</h5>
         {% endfor %}
     {% endif %}
-    <a class="btn btn-primary btn-sm shadow-sm d-none d-sm-inline-block" 
-    role="button" href="#" style="background: #8D5240;">
-    <i class="fas fa-upload text-white-50 fa-sm"></i> Add New File</a>
+    <div>
+        <a class="btn btn-primary btn-sm shadow-sm d-none d-sm-inline-block" 
+        role="button" href="{% url 'administrator:upload' %}" >
+        <i class="fas fa-book text-white-50 fa-sm"></i> Add New Resource</a>
+
+        <a class="btn btn-primary btn-sm shadow-sm d-none d-sm-inline-block" 
+        role="button" href="{% url 'administrator:newCourse' %}" style="background: #8D5240;">
+        <i class="fas fa-upload text-white-50 fa-sm"></i> Add New Course</a>
+    </div>
 </div>
 {% endblock header %}
-                    {% block row1 %}
-                    <div class="row">
-                        <div class="col-md-6 col-xl-3 mb-4">
-                            <div class="card shadow border-left-primary h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-uppercase text-primary text-xs font-weight-bold mb-1"><span>Resources Uploaded</span></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ all_resources }}&nbsp;</span></div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+{% block row1 %}
+    <div class="row">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-primary text-xs font-weight-bold mb-1"><span>Resources Uploaded</span></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ all_resources }}&nbsp;</span></div>
                         </div>
-                        <div class="col-md-6 col-xl-3 mb-4">
-                            <div class="card shadow border-left-success h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-uppercase text-success text-xs font-weight-bold mb-1"><span>Total Course Materials</span></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>&nbsp;{{ course_materials }}</span></div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-3 mb-4">
-                            <div class="card shadow border-left-info h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-uppercase text-info text-xs font-weight-bold mb-1"><span>Total Past Questions</span></div>
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><span>{{ past_questions }}</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-3 mb-4">
-                            <div class="card shadow border-left-warning h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-uppercase text-warning text-xs font-weight-bold mb-1"><span> ICAN Materials</span></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ ican }}</span></div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
                     </div>
-                    {% endblock row1 %}
-
-                    {% block row2 %}
-                    <div class="row">
-                        <div class="col-lg-6 mb-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Add New Resource&nbsp;</h6>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="small font-weight-bold">100 Level<span class="float-right">{{perc_100}}%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="bg-danger progress-bar" role="progressbar" style="width:{{perc_100}}%;" aria-valuenow="{{perc_100}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">200 Level<span class="float-right">{{perc_200}}%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="bg-warning progress-bar" role="progressbar" style="width:{{perc_200}}%;" aria-valuenow="{{perc_200}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">300 Level<span class="float-right">{{perc_300}}%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width:{{perc_300}}%;" aria-valuenow="{{perc_300}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">400 Level<span class="float-right">{{ perc_400 }}%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="bg-info progress-bar" role="progressbar" style="width:{{perc_400}}%;" aria-valuenow="{{perc_400}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Add New Cours</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center"><img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width:25rem;" src="{% static 'administrator/img/undraw_posting_photo.svg' %}" alt="..."></div>
-                                    <p>More Features coming soon !!!!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endblock row2 %}
                 </div>
             </div>
-           
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-success h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-success text-xs font-weight-bold mb-1"><span>Total Course Materials</span></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>&nbsp;{{ course_materials }}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-info h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-info text-xs font-weight-bold mb-1"><span>Total Past Questions</span></div>
+                            <div class="row align-items-center no-gutters">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><span>{{ past_questions }}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-warning h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-warning text-xs font-weight-bold mb-1"><span> ICAN Materials</span></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ ican }}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock row1 %}
+
+{% block row2 %}
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="text-primary m-0 font-weight-bold" 
+                    style="color: #8D5240 !important;">Recently Added Course Materials&nbsp;</h6>
+                </div>
+                <div class="card-block">
+                    {% if course_materials > 0 %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date Added</th>
+                                    <th>Course</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for mat in recent_mat %}
+                                <tr>
+                                    <td>{{ mat.date_added }}</td>
+                                    <td>{{ mat.course }}</td>
+                                    <td>{{ mat.mat_name }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <p class="text-center"><a class="btn btn-primary btn-sm shadow-sm d-none d-sm-inline-block" 
+                            role="button" href="" style="background: #8D5240;">
+                            <i class="fas fa-upload text-white-50 fa-sm"></i> View All</a></p>
+                    </div> 
+                    {% else %}
+                    <div class="text-center">
+                        <h6 class="text-dark" style="padding-top: 10px">No Course Materials Uploaded Yet</h6>
+                            <span style="padding:10px">
+                            <button href="" type ="button"
+                                    class="btn btn-grd-primary btn-sm btn-round waves-effect waves-light">Upload New Resource
+                            </button>
+                            </span>
+                        </h6>
+                    </div>
+                    {% endif %}                            
+                </div>
+            </div>
+        </div>
+        <!-- Card to display recently added past questions -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="text-primary m-0 font-weight-bold" style="color: #8D5240 !important;">Recently Added Past Questions&nbsp;</h6>
+                </div>
+                <div class="card-block">
+                    {% if past_questions > 0 %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date Added</th>
+                                    <th>Course</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pq in recent_pq %}
+                                <tr>
+                                    <td>{{ pq.date_added }}</td>
+                                    <td>{{ pq.course }}</td>
+                                    <td>{{ pq.mat_name }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <p class="text-center"><a class="btn btn-primary btn-sm shadow-sm d-none d-sm-inline-block" 
+                            role="button" href="" style="background: #8D5240;">
+                            <i class="fas fa-upload text-white-50 fa-sm"></i> View All</a></p>
+                    </div> 
+                    {% else %}
+                    <div class="text-center">
+                        <h6 class="text-dark" style="padding-top: 10px">No Course Materials Uploaded Yet</h6>
+                            <span style="padding:10px">
+                            <button href="" type ="button"
+                                    class="btn btn-grd-primary btn-sm btn-round waves-effect waves-light">Upload New Resource
+                            </button>
+                            </span>
+                        </h6>
+                    </div> 
+                    {% endif %}                         
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock row2 %}

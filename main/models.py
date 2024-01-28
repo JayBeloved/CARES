@@ -47,12 +47,24 @@ class Student(models.Model):
 
 # Model for Courses    
 class Course(models.Model):
+    LEVEL_CHOICES = [
+        ('100', '100 Level'),
+        ('200', '200 Level'),
+        ('300', '300 Level'),
+        ('400', '400 Level'),
+        ('ats1', 'ATS 1'),
+        ('ats2', 'ATS 2'),
+        ('ats3', 'ATS 3'),
+        ('skills', 'Skill Level'),
+        ('prof', 'Professional'),
+    ]
+
     course_title = models.CharField(max_length=255)
     course_code = models.CharField(max_length=20)
-    level = models.CharField(max_length=10)
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='ats')
 
     def __str__(self):
-        return f"{self.code} ({self.title})"
+        return f"{self.course_code} ({self.course_title})"
 
 # Model for resources
 class Resource(models.Model):
@@ -72,4 +84,4 @@ class Resource(models.Model):
     link = models.URLField()
 
     def __str__(self):
-        return f"{self.category} - {self.name} ({self.course.course_code})"
+        return f"{self.category} - {self.mat_name} ({self.course.course_code})"

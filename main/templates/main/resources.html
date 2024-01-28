@@ -6,45 +6,117 @@
 <div class="d-sm-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0 text-gray-800">Resources Hub</h1>
 </div>
-<p class="mb-4">Search for resources you need here using the filter and search bar.</p>
+{% endblock header %}
 
-<div class="card shadow p-3 mb-5 bg-white rounded">
-    <div class="card-body">
-        <!-- Your HTML code within Django template -->
-        <form method="GET" action="">
-            <div class="form-group">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="search_type" id="past_questions" value="past_questions">
-                    <label class="form-check-label" for="past_questions">Past Questions</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="search_type" id="course_materials" value="course_materials">
-                    <label class="form-check-label" for="course_materials">Course Materials</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="search_type" id="all" value="all" checked>
-                    <label class="form-check-label" for="all">All</label>
+{% block row1 %}
+    <div class="row">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-primary text-xs font-weight-bold mb-1"><span>Resources Uploaded</span></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ all_resources }}&nbsp;</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <span class="form-bar"></span>
-                    <label for="select_course" class="float-label text-primary">Select Course</label>
-                    <input type="text" class="shadow form-control form-control-user" id="select_course" name="select_course">
-                </div>
-                <div class="form-group col-md-4">
-                    <span class="form-bar"></span>
-                    <label for="choose_level" class="float-label text-primary">Choose Level</label>
-                    <input type="text" class="shadow form-control form-control-user" id="choose_level" name="choose_level">
-                </div>
-                <div class="form-group col-md-4">
-                    <label>&nbsp;</label> <!-- Add an empty label for spacing -->
-                    <button type="submit" class="btn btn-primary btn-block">Search</button>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-success h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-success text-xs font-weight-bold mb-1"><span>Total Course Materials</span></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>&nbsp;{{ course_materials }}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-info h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-info text-xs font-weight-bold mb-1"><span>Total Past Questions</span></div>
+                            <div class="row align-items-center no-gutters">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><span>{{ past_questions }}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-warning h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-warning text-xs font-weight-bold mb-1"><span> ICAN Materials</span></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span>{{ ican }}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock row1 %}
+
+{% block row2 %}
+{% if all_resources == 0 %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h4 class="m-0 font-weight-bold text-primary text-center">No Results Found</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 class="text-center {{ messages.tags }} animate__animated animate__fadeIn animate__delay-3s">{{ message }}</h5>
+                {% endfor %}
+                {% endif %}
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recently Added Resources</h6>
+            </div>
+            <div class="card-body">
+                <!-- Create a card with a document icon for each resource in the queryset, 6 per row with href to the resource link -->
+                <div class="row">
+                    {% for resource in resources %}
+                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-12 d-flex flex-row align-items-stretch">
+                            <div class="card shadow mb-4 h-100">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <i class="fas fa-file fa-4x text-primary mt-2 mr-2" ></i>
+                                        <h4 class='mb-2 mt-4'>{{ resource.mat_name }}</h4>
+                                    </div>
+                                </div>
+                                <div class='card-footer'>
+                                    <div class="text-center">
+                                    <a href="{{ resource.link }}" class="btn btn-primary btn-sm shadow-sm" 
+                                    style="background: #8D5240; border-color: transparent">open</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- End of row -->  
+            </div>
+        </div>
     </div>
 </div>
-
-{% endblock header %}
+{% endif %}
+{% endblock row2 %}

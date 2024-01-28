@@ -31,7 +31,7 @@
 
             
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'administrator:dashboard' %}">
+                <a class="nav-link" href="{% url 'administrator:edu_dashboard' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -52,63 +52,75 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">100Lvl </h6>
-                        <a class="collapse-item" href="">Past Questions</a>
-                        <a class="collapse-item" href="">Course Materials</a>
-                        <a class="collapse-item disabled" href="">Suggested Solutions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'pq' '100' %}">Past Questions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'material' '100' %}">Course Materials</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'solution' '100' %}">Suggested Solutions</a>
                     </div>
                 </div>
             </li> 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                     <i class="fas fa-fw fa-user-circle"></i>
                     <span>200 Level</span>
                 </a>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">200Lvl </h6>
-                        <a class="collapse-item" href="">Past Questions</a>
-                        <a class="collapse-item" href="">Course Materials</a>
-                        <a class="collapse-item disabled" href="">Suggested Solutions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'pq' '200' %}">Past Questions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'material' '200' %}">Course Materials</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'solution' '200' %}">Suggested Solutions</a>
                     </div>
                 </div>
             </li> 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                     <i class="fas fa-fw fa-user-circle"></i>
                     <span>300 Level</span>
                 </a>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">300Lvl </h6>
-                        <a class="collapse-item" href="">Past Questions</a>
-                        <a class="collapse-item" href="">Course Materials</a>
-                        <a class="collapse-item disabled" href="">Suggested Solutions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'pq' '300' %}">Past Questions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'material' '300' %}">Course Materials</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'solution' '300' %}">Suggested Solutions</a>
                     </div>
                 </div>
             </li> 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
                     <i class="fas fa-fw fa-user-circle"></i>
                     <span>400 Level</span>
                 </a>
-                <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">400Lvl </h6>
-                        <a class="collapse-item" href="">Past Questions</a>
-                        <a class="collapse-item" href="">Course Materials</a>
-                        <a class="collapse-item disabled" href="">Suggested Solutions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'pq' '400' %}">Past Questions</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'material' '400' %}">Course Materials</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'solution' '400' %}">Suggested Solutions</a>
                     </div>
                 </div>
             </li> 
 
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>ICAN</span></a>
-            </li>
+                    <span>ICAN</span>
+                </a>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">ICAN Levels</h6>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'ican' 'ats1' %}">ATS 1</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'ican' 'ats2' %}">ATS 2</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'ican' 'ats3' %}">ATS 3</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'ican' 'skills' %}">Skills</a>
+                        <a class="collapse-item" href="{% url 'administrator:resource_library' 'ican' 'prof' %}">Professional</a>
+
+                    </div>
+                </div>
+            </li> 
 
             
             <hr class="sidebar-divider d-none d-md-block">
@@ -122,7 +134,82 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="bg-white shadow navbar navbar-expand navbar-light topbar mb-4 static-top"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop"><i class="fas fa-bars"></i></button>
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" 
+                    action="{% url 'administrator:edu_search' %}" method="GET">
+                    <div class="form-row">
+                        <div class='form-group col-md-5'> 
+                            <div class="input-group">
+                                <!-- Create an input dropdown that uses the courses in the course model stored in a context variable called courses-->
+                                <select name="q1" id="q1" class="form-control  form-control-select bg-light border-0" style="border-radius: 10rem;padding: 0.5rem 0.5rem;">
+                                    <option value="none" selected>Select Course</option>
+                                    {% for course in courses %}
+                                        <option value="{{course.course_code}}">{{course.course_code}}</option>
+                                    {% endfor %}
+                                </select>
+                                {% comment %} <input class="bg-light border-0 form-control form-control small" 
+                                type="text" name="q1" aria-describedby="basic-addon2" aria-label="Course" placeholder="Select Course"> {% endcomment %}
+                            </div>
+                            
+                        </div>
+                        <div class='form-group col-md-5'> 
+                            <div class="input-group">
+                                <!-- Create an input dropdown that uses the categories options in the resource model stored in a context variable called categories-->
+                                <select name="q2" id="q2" class="form-control  form-control-select bg-light border-0" style="border-radius: 10rem;padding: 0.5rem 0.5rem;">
+                                    <option value="none" selected>Select Category</option>
+                                    {% for key, value in categories.items %}
+                                            <option value="{{key}}">{{value}}</option>
+                                    {% endfor %}
+                                </select>
+                                {% comment %} <input class="bg-light border-0 form-control form-control small" 
+                                type="text" name="q2" aria-describedby="basic-addon2" aria-label="Category" placeholder="Select Category"> {% endcomment %}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    </form>
                     
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search" action="{% url 'administrator:edu_search' %}" method="GET" >
+                                    <div class="form-row">
+                                        <div class='form-group col-md-5'> 
+                                            <div class="input-group">
+                                                <select name="q1" id="q1" class="form-control  form-control-select bg-light border-0" style="border-radius: 10rem;padding: 0.5rem 0.5rem;">
+                                                    <option value=None selected>Select Course</option>
+                                                    {% for course in courses %}
+                                                        <option value="{{course.course_code}}">{{course.course_code}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class='form-group col-md-5'> 
+                                            <div class="input-group">
+                                                <select name="q2" id="q2" class="form-control  form-control-select bg-light border-0" style="border-radius: 10rem;padding: 0.5rem 0.5rem;">
+                                                    <option value=None selected>Select Category</option>
+                                                    {% for key, value in categories.items %}
+                                                            <option value="{{key}}">{{value}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <button class="btn btn-primary btn-block" type="submit">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item dropdown no-arrow mx-1">

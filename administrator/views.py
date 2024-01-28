@@ -7,6 +7,7 @@ from django.views.generic import ListView
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 ########################
 
@@ -56,9 +57,11 @@ def login_redirect(request):
 
 @login_required
 def edu_dashboard(request):
-    
     # Check if there are resources in the database
     all_resources, course_materials, past_questions, ican, solution = (0,0,0,0,0)
+    courses = []
+    recent_mat = []
+    recent_pq = []
     check = len(Resource.objects.all())
     if check > 0:
         # Get all resources
@@ -67,7 +70,7 @@ def edu_dashboard(request):
         df = pd.DataFrame.from_records(allresources.values())
 
         # Convert date to numeric
-        df[['Date']] = df[['Date']].apply(pd.to_datetime)
+        df[['date_added']] = df[['date_added']].apply(pd.to_datetime)
 
 
         # Get values 
@@ -84,18 +87,33 @@ def edu_dashboard(request):
         ican, _ = df_ican.shape # Number of ican materials
         solution, _ = df_solutions.shape
 
-        """
-        Values for Level Materials
-        
-        """
+        # Get the recently added metarials
+        recent_mat = Resource.objects.filter(category='material').order_by('-date_added')[:5]
 
+        # Get the recently added past questions
+        recent_pq = Resource.objects.filter(category='pq').order_by('-date_added')[:5]
+
+        # Get the course list
+        courses = Course.objects.all()
+
+        # Get Categories List
+        categories = {
+        'material': 'Course Material',
+        'pq': 'Past Question',
+        'solution': 'Suggested Solution',
+        'ican': 'ICAN'
+    }
 
     context = {
         'all_resources':all_resources,
         'course_materials':course_materials,
         'past_questions':past_questions,
         'ican': ican,
-        'solution': solution
+        'solution': solution,
+        'recent_mat': recent_mat,
+        'recent_pq': recent_pq,
+        'courses': courses,
+        'categories': categories,
     }
 
     return render(request, 'administrator/dashboard/educator_dash.html', context) 
@@ -215,6 +233,17 @@ class ResourcesListView(ListView):
     template_name = "administrator/dashboard/resources.html"
     context_object_name = "resources"
 
+    # Get the course list
+    courses = Course.objects.all()
+
+    # Get Categories List
+    categories = {
+    'material': 'Course Material',
+    'pq': 'Past Question',
+    'solution': 'Suggested Solution',
+    'ican': 'ICAN'
+    }
+
     def get_queryset(self):
         queryset = super().get_queryset()
         if self.request.user.user_type == 1:
@@ -222,10 +251,10 @@ class ResourcesListView(ListView):
             queryset = Resource.objects.all()
         return queryset
 
-    # extra_context = {
-    #     'alertCount': alert()[1],
-    #     'alerts': alert()[0],
-    # }
+    extra_context = {
+        'courses': courses,
+        'categories': categories,
+    }
     ordering = ['-id']
     paginate_by = 10
 
@@ -316,6 +345,263 @@ def search(request):
 
     return render(request, 'administrator/dashboard/search.html', context)
     
+
+
+@login_required()
+def upload_resource(request):
+    # Create view function to upload resources
+    form = ResourceUploadForm(request.POST or None)
+    cat = ""
+    # Get the course list
+    courses = Course.objects.all()
+
+    # Get Categories List
+    categories = {
+    'material': 'Course Material',
+    'pq': 'Past Question',
+    'solution': 'Suggested Solution',
+    'ican': 'ICAN'
+    }
+    # Check for form submission
+    if request.method == "POST":
+        # Check form submission
+        if form.is_valid():
+            # Get the form fields
+            course = form.cleaned_data.get('course')
+            category = form.cleaned_data.get('category')
+            mat_name = form.cleaned_data.get('mat_name')
+            description = form.cleaned_data.get('description')
+            link = form.cleaned_data.get('link')
+            date_added = form.cleaned_data.get('date_added')
+
+            if category == 'material':
+                cat='CM'
+            elif category == 'pq':
+                cat='PQ'
+            elif category == 'solution':
+                cat='SS'
+
+            # Generate Unique ReceiptNo
+            #############################
+            # Randomly Choose Letters for adding to code
+            def gencode(cat):
+                char1 = random.choice(string.ascii_uppercase)
+                char2 = random.choice(string.ascii_lowercase)
+                char3 = random.choice(string.ascii_letters)
+                char4 = random.choice('1234567890')
+
+                year = timezone.now().year
+
+                return f"RSRC/{cat}/{year}/{char1}{char2}{char4}{char3}"
+
+            rsd = gencode(cat)
+            resource_code = rsd
+            while Resource.objects.filter(resource_code=rsd):
+                rsd = gencode()
+                if not Resource.objects.filter(resource_code=gencode):
+                    resource_code = gencode
+
+            rs = Resource.objects.create(
+                course=course,
+                category=category,
+                mat_name=mat_name,
+                description=description,
+                resource_code=resource_code,
+                date_added=date_added,
+                link=link,
+            )
+            rs.save()
+
+            # Redirect to dashboard
+            messages.success(request, 'Resource Uploaded Successfully')
+            return HttpResponseRedirect(reverse("administrator:upload"))
+        else:
+            messages.error(request, 'Something Went Wrong')
+            return HttpResponseRedirect(reverse("administrator:upload"))
+
+    
+    context = {
+        'form': form,
+        'courses': courses,
+        'categories': categories,
+    }
+
+    return render(request, 'administrator/dashboard/upload.html', context)
+
+
+@login_required()
+def newCourse(request):
+    # Get the course list
+    courses = Course.objects.all()
+
+    # Get Categories List
+    categories = {
+    'material': 'Course Material',
+    'pq': 'Past Question',
+    'solution': 'Suggested Solution',
+    'ican': 'ICAN'
+    }
+
+    # Create view function to upload resources
+    form = CourseCreationForm(request.POST or None)
+
+    # Check for form submission
+    if request.method == "POST":
+        # Check form submission
+        if form.is_valid():
+            # Get the form fields
+            course_title = form.cleaned_data.get('course_title')
+            course_code = form.cleaned_data.get('course_code')
+            level = form.cleaned_data.get('level')
+
+            crs = Course.objects.create(
+                course_title=course_title,
+                course_code=course_code,
+                level=level,
+            )
+            crs.save()
+
+            # Redirect to dashboard
+            messages.success(request, 'Course Added Successfully')
+            return HttpResponseRedirect(reverse("administrator:newCourse"))
+        else:
+            messages.error(request, 'Something Went Wrong')
+            return HttpResponseRedirect(reverse("administrator:newCourse"))
+
+    
+    context = {
+        'form': form,
+        'courses': courses,
+        'categories': categories,
+    }
+
+    return render(request, 'administrator/dashboard/newCourse.html', context)
+
+
+# Create the edu_search view using a listview class
+class edu_search(ListView):
+    model = Resource
+    template_name = 'administrator/dashboard/edu_search.html'
+    context_object_name = 'resources'
+    paginate_by = 6
+
+    # Get the course list
+    courses = Course.objects.all()
+
+    # Get Categories List
+    categories = {
+    'material': 'Course Material',
+    'pq': 'Past Question',
+    'solution': 'Suggested Solution',
+    'ican': 'ICAN'
+    }
+
+    extra_context = {
+        'courses': courses,
+        'categories': categories,
+    }
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(edu_search, self).get_context_data(**kwargs)
+        query1 = self.request.GET.get('q1')
+        query2 = self.request.GET.get('q2')
+
+        if query1 is None and query2 is None:
+            allresources = Resource.objects.all()
+            context['searchq'] = allresources
+        else:
+            context['searchq1'] = query1
+            context['searchq2'] = query2
+        return context
+
+    def get_queryset(self):
+        queryset = super(edu_search, self).get_queryset()
+        query1 = self.request.GET.get('q1')
+        query2 = self.request.GET.get('q2')
+
+        if query1 is None and query2 is None:
+            return queryset
+        else:
+            if query1 != 'none' and query2 != 'none':
+                # Get the resources for the course under the searched category
+                try:
+                    course_id = Course.objects.get(course_code=query1)
+                    queryset = Resource.objects.filter(course=course_id, category=query2)
+                except ObjectDoesNotExist:
+                    queryset = None
+            elif query1 != 'none' and query2 == 'none':
+                try:
+                    course_id = Course.objects.get(course_code=query1)
+                    queryset = Resource.objects.filter(course=course_id)
+                except ObjectDoesNotExist:
+                    queryset = None
+            elif query1 == 'none' and query2 != 'none':
+                try:
+                    queryset = Resource.objects.filter(category=query2)
+                except ObjectDoesNotExist:
+                    queryset = None
+
+            return queryset
+
+
+# Create a view function that takes request, level, category and show returns a resources from the resource model that are for courses for that level and of the category inserted in the function
+@login_required()
+def resource_library(request, category, level):
+    if category is None:
+        messages.error(request, 'No Category Selected')
+        return HttpResponseRedirect(reverse("administrator:edu_dashboard"))
+    else:
+        if level is None:
+            messages.error(request, 'No Level Selected')
+            return HttpResponseRedirect(reverse("administrator:edu_dashboard"))
+        else:
+            try:
+                # Retrieve courses for the specified level
+                courses_for_level = Course.objects.filter(level=level)
+            except ObjectDoesNotExist:
+                messages.error(request, 'Something Went Wrong')
+                return HttpResponseRedirect(reverse("administrator:edu_dashboard"))
+    
+    # Retrieve resources for the specified level and category
+    resources = Resource.objects.filter(course__in=courses_for_level, category=category)
+
+    # Get the course list
+    courses = Course.objects.all()
+
+    # Get Categories List
+    categories = {
+    'material': 'Course Material',
+    'pq': 'Past Question',
+    'solution': 'Suggested Solution',
+    'ican': 'ICAN'
+    }
+
+     
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(resources, 6)  # Show 6 resources per page
+
+    try:
+        resources = paginator.page(page)
+    except PageNotAnInteger:
+        resources = paginator.page(1)
+    except EmptyPage:
+        resources = paginator.page(paginator.num_pages)
+    
+    total = len(resources)
+
+    context = {
+        'resources': resources,
+        'category': category,
+        'level': level,
+        'courses': courses,
+        'categories': categories,
+        'count': total,
+    }
+    
+    return render(request, 'administrator/dashboard/resource_library.html', context)
+
 # @login_required
 # def update(request, student_id):
 #     if student_id is None:
@@ -327,5 +613,4 @@ def search(request):
 #         except ObjectDoesNotExist:
 #             messages.error(request, 'Something Went Wrong')
 #             return HttpResponseRedirect(reverse("administrator:students"))
-    
     

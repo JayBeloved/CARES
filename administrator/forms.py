@@ -92,11 +92,11 @@ class ResourceUploadForm(forms.ModelForm):
             }
         ))
 
-    link = forms.FloatField(
-        widget=forms.NumberInput(
+    link = forms.URLField(
+        widget=forms.URLInput(
             attrs={
                 "class": "form-control form-control-user",
-                'placeholder': " Amount Paid",
+                'placeholder': " Link to File",
             }
         ))
     
@@ -113,6 +113,39 @@ class ResourceUploadForm(forms.ModelForm):
     class Meta:
         model = Resource
         fields = ['course', 'category', 'mat_name', 'description', 'link', 'date_added']
+
+class CourseCreationForm(forms.ModelForm):
+    course_title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Course Title",
+                "class": "shadow form-control form-control-user"
+            }
+        ))
+    
+    course_code = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Course Code",
+                "class": "shadow form-control form-control-user"
+            }
+        ))
+    
+    level = forms.ChoiceField(
+        choices=Course.LEVEL_CHOICES,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control form-control-select',
+                'style': "border-radius: 10rem;padding: 0.5rem 0.5rem;",
+                'placeholder': " Choose Level",
+            }
+        ))
+
+    class Meta:
+        model = Course
+        fields = ['course_title', 'course_code', 'level']
+
+
 
 # class ProfileInfoUpdateForm(forms.ModelForm):
 #     username = forms.CharField(
