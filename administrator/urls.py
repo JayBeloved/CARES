@@ -18,5 +18,6 @@ urlpatterns = [
             path('academic/dashboard/courses/new', views.newCourse, name='newCourse'),
             path('academic/search/resources/', views.edu_search.as_view(), name='edu_search'),
             path('academic/resources/<str:category>/<str:level>/', views.resource_library, name='resource_library'),
+            path('export_excel/', views.export_excel, name='export_excel'),
         ], 'cares'), namespace='administrator')),
 ]

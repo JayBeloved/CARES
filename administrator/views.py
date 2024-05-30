@@ -17,6 +17,22 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .forms import *
 from main.models import Student, Course, Resource
 
+# Create a function that export the tables in the database to an excel file
+def export_excel(request):
+    students = Student.objects.all()
+    student_df = pd.DataFrame.from_records(students.values())
+
+    # Convert the DataFrame to an Excel file
+    excel_file = pd.ExcelWriter('students.xlsx', engine='xlsxwriter')
+    student_df.to_excel(excel_file, index=False)
+
+    # Create a HttpResponse object with the excel file content
+    response = HttpResponse(excel_file.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=students.xlsx'
+
+    return response
+
+
 
 # Create your views here.
 def login_view(request):
@@ -615,3 +631,4 @@ def resource_library(request, category, level):
 #             messages.error(request, 'Something Went Wrong')
 #             return HttpResponseRedirect(reverse("administrator:students"))
     
+# Create a function that exports students table as an excel file
