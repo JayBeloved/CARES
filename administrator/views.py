@@ -22,13 +22,12 @@ def export_excel(request):
     students = Student.objects.all()
     student_df = pd.DataFrame.from_records(students.values())
 
-    # Convert the DataFrame to an Excel file
-    excel_file = pd.ExcelWriter('students.xlsx', engine='xlsxwriter')
-    student_df.to_excel(excel_file, index=False)
+    # Convert the DataFrame to a CSV file
+    csv_file = student_df.to_csv(index=False)
 
-    # Create a HttpResponse object with the excel file content
-    response = HttpResponse(excel_file.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=students.xlsx'
+     # Create a HttpResponse object with the csv file content
+    response = HttpResponse(csv_file, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=students.csv'
 
     return response
 
