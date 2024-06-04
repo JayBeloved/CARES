@@ -11,6 +11,7 @@ urlpatterns = [
             path('finance/dashboard/', views.dashboard, name='dashboard'),
             path('finance/dashboard/students', views.StudentsListView.as_view(), name='students'),
             path('finance/verify/student/<int:student_id>', views.verify, name='verify'),
+            path('finance/verify/multiple/', views.verify_multiple, name='verify_multiple'),
             path('finance/search/matric', views.search, name='search'),
             path('academic/dashboard/', views.edu_dashboard, name='edu_dashboard'),
             path('academic/dashboard/resources', views.ResourcesListView.as_view(), name='resources'),

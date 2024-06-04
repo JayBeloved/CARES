@@ -8,6 +8,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 ########################
 
@@ -30,7 +32,6 @@ def export_excel(request):
     response['Content-Disposition'] = 'attachment; filename=students.csv'
 
     return response
-
 
 
 # Create your views here.
@@ -241,7 +242,7 @@ class StudentsListView(ListView):
     #     'alerts': alert()[0],
     # }
     ordering = ['-id']
-    paginate_by = 10
+    paginate_by = 25
 
 
 class ResourcesListView(ListView):
@@ -330,6 +331,48 @@ def verify(request, student_id):
     return render(request, 'administrator/dashboard/verification.html', context)
 
 
+from django.utils import timezone
+
+@login_required
+def verify_multiple(request):
+    student_ids = request.POST.getlist('student_ids')
+    for student_id in student_ids:
+        try:
+            student = Student.objects.get(id=student_id)
+        except ObjectDoesNotExist:
+            messages.error(request, 'Something Went Wrong')
+            return HttpResponseRedirect(reverse("administrator:students"))
+
+        # Set the payment details
+        payment_date = timezone.now()
+        amount = 10000
+        status = 'Paid'
+
+        # Generate Unique ReceiptNo
+        def gencode():
+            char1 = random.choice(string.ascii_uppercase)
+            char2 = random.choice(string.ascii_lowercase)
+            char3 = random.choice(string.ascii_letters)
+            char4 = random.choice('1234567890')
+
+            return f"RUNASA/2023/{student_id}/{char1}{char2}{char4}{char3}"
+
+        rcn = gencode()
+        receipt_no = rcn
+        while Student.objects.filter(ReceiptNo=rcn):
+            rcn = gencode()
+            if not Student.objects.filter(receipt_no=gencode):
+                receipt_no = gencode
+
+        # Update the Student Record
+        student.Paid, student.Amount, student.Date, student.ReceiptNo = (status,amount,payment_date,receipt_no)
+        student.save()
+
+        messages.success(request, f'Payment for student {student_id} Verified Successfully')
+
+    return render(request, 'administrator/dashboard/multiple.html')
+
+
 @login_required()
 def search(request):
     # Default assignment for querysets
@@ -347,7 +390,10 @@ def search(request):
             query = query.upper()
             try:
                 # Filter students to get matches
-                students = Student.objects.filter(MatricNo__contains=query)
+                students = Student.objects.filter(
+                    Q(MatricNo__contains=query) | 
+                    Q(FullName__icontains=query)  # Add this line
+                )
                 count = len(students)
             except ObjectDoesNotExist:
                 messages.error(request, 'Empty Search')
@@ -360,7 +406,6 @@ def search(request):
     }
 
     return render(request, 'administrator/dashboard/search.html', context)
-    
 
 
 @login_required()
