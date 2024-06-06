@@ -405,7 +405,7 @@ def search(request):
         'query': query,
     }
 
-    return render(request, 'administrator/dashboard/search.html', context)
+    return render(request, 'administrator/dashboard/multiple.html', context)
 
 
 @login_required()
